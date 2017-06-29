@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDB.Api", "RDB.Api\RDB.Api.csproj", "{31009366-3EB6-4DAE-830F-E1F685F3F3AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDB.Api", "RDB.Api\RDB.Api.csproj", "{31009366-3EB6-4DAE-830F-E1F685F3F3AD}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9ABD7C38-281D-45B6-A51F-0628D91CDB78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{963F63DB-44AB-4976-9F99-F8CDA39BED72}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
