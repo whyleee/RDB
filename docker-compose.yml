@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  rdb.api:
+    image: rdb.api
+    build:
+      context: ./RDB.Api
+      dockerfile: Dockerfile
