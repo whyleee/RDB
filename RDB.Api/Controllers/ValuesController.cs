@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,7 @@ namespace RDB.Api.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { RuntimeInformation.OSDescription, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") };
         }
 
         // GET api/values/5

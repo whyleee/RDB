@@ -1,6 +1,11 @@
-FROM microsoft/aspnetcore:2.0
-ARG source
+FROM microsoft/aspnetcore-build:2.0 AS build-env
 WORKDIR /app
-EXPOSE 80
-COPY ${source:-obj/Docker/publish} .
+COPY *.csproj ./
+RUN dotnet restore
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+FROM microsoft/aspnetcore:2.0
+WORKDIR /app
+COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "RDB.Api.dll"]
