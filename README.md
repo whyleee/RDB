@@ -8,6 +8,9 @@ API-first RDB POC on .NET Core, Docker and MongoDB.
 
 
 
+
+
+
 ## Getting Started
 Software requirements:
 - Windows 10, macOS or Linux
@@ -39,13 +42,16 @@ Add hosts:
 Browse http://rdb.api/api/values after container or server is started.
 
 ## Work Guide
-The task is ready for dev:
+Full task journey from the backlog to production is described below.
+
+### Ready for dev conditions
 - Has concise description with exact specs
   - API: operations, fields, errors
   - Admin: screenshot or drawing, contents and behavior, link to required APIs
-- Approved by somebody from the team
+- Approved by somebody from the core team
 - Moved to Todo Trello column
 
+### Setup tasks
 Setup tasks require investigation, communication and solution decisions. Here is the flow:
 - Each task require at least three persons to be assigned
 - When task group is ready - move to Doing column
@@ -54,7 +60,7 @@ Setup tasks require investigation, communication and solution decisions. Here is
 - Update the card with final decisions and more strict todos
 - Continue with implementation
 
-Task development guidelines:
+### Development guidelines
 - Move Trello card to Doing column, assign yourself
 - Start a new git branch, eg `setup-db`, `api-recipe-crud` or `admin-account-selector`
 - Make the code
@@ -70,10 +76,9 @@ Task development guidelines:
 - Review the code and refactor
 - Create a pull request
 
-The task is done:
-*(approves and code reviews can be done by any other teammate)*
+### Definition of Done
 - Build and tests are green
-- Code review completed
+- Code review\* completed
 - Setup:
   - Approved by all task group members
   - All setup or work requirements documented in readme
@@ -86,5 +91,7 @@ The task is done:
 - Admin:
   - UI and behavior approved
   - Works in Chrome, Safari, Firefox, Edge, iPhone and Android
-- Merged to master and deployed to test
+- Merged to master and deployed to test (published from Visual Studio)
 - Moved to Done Trello column, nobody assigned
+
+*\* (approves and code reviews can be done by any other competent teammate)*
