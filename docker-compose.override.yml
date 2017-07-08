@@ -5,4 +5,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80:80"
+      - "18420:80"
+
+  rdb.admin:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "18421:80"

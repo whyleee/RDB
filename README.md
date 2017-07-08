@@ -22,11 +22,6 @@ Software requirements:
   - [Visual Studio Code](https://code.visualstudio.com/)
   - or whatever else you prefer
 
-Add hosts:
-```
-127.0.0.1	rdb.api
-```
-
 ### Visual Studio
 - Docker: `Ctrl+F5` in docker-compose project. *Debug is not working :(*
 - Local: `Ctrl+F5` in selected project or `F5` for debugging.
@@ -39,7 +34,7 @@ Add hosts:
 - Docker: `docker-compose up -d --build` (in the solution root directory)
 - Local: `dotnet restore` then `dotnet run` (in selected project directory)
 
-Browse http://rdb.api/api/values after container or server is started.
+Browse http://localhost:18420/api/values for API or http://localhost:18421 for admin after container or server is started.
 
 ## Work Guide
 Full task journey from the backlog to production is described below.
