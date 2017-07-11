@@ -6,3 +6,7 @@ services:
     build:
       context: ./RDB.Api
       dockerfile: Dockerfile
+    links:
+      - mongo
+  mongo:
+    image: mongo

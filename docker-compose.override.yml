@@ -5,4 +5,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80:80"
+      - "18420:80"
+  mongo:
+    ports:
+      - "18427:27017"
+    volumes:
+      - ./data:/data
