@@ -1,82 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDB.Driver;
+using RDB.Api.Business;
+using RDB.Api.Models;
 
 namespace RDB.Api.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private readonly IMongoDatabase _mongo;
+        private readonly ValueStore _valueStore;
 
-        public ValuesController(IMongoDatabase mongo)
+        public ValuesController(ValueStore valueStore)
         {
-            _mongo = mongo;
-        }
-
-        private IMongoCollection<Value> GetCollection()
-        {
-            return _mongo.GetCollection<Value>("values");
+            _valueStore = valueStore;
         }
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Value> Get()
+        public Task<IList<Value>> Get(CancellationToken ct)
         {
-            return GetCollection().Find(val => true).ToList();
+            return _valueStore.GetAllAsync(ct);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        public async Task<IActionResult> Get(string id, CancellationToken ct)
         {
-            var value = GetCollection().Find(val => val.Id == id).FirstOrDefault();
-            return value != null ? (IActionResult) Ok(value) : NotFound();
-        }
+            var value = await _valueStore.GetByIdAsync(id, ct);
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-            Console.WriteLine("POST value: " + value);
-            GetCollection().InsertOne(new Value { Text = value });
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody]string value)
-        {
-            var existingValue = GetCollection().Find(val => val.Id == id).FirstOrDefault();
-
-            if (existingValue == null)
+            if (value == null)
             {
                 return NotFound();
             }
 
-            existingValue.Text = value;
-            GetCollection().ReplaceOne(val => val.Id == id, existingValue);
+            return Ok(value);
+        }
 
-            return Ok(existingValue);
+        // POST api/values
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody][Required]string text, CancellationToken ct)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            
+            var value = new Value { Text = text };
+            await _valueStore.InsertAsync(value, ct);
+            
+            return Ok(value);
+        }
+
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(string id, [FromBody][Required]string text, CancellationToken ct)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var value = new Value { Id = id, Text = text };
+            var result = await _valueStore.UpdateAsync(value, ct);
+
+            if (result.MatchedCount == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> DeleteAsync(string id, CancellationToken ct)
         {
-            var result = GetCollection().DeleteOne(val => val.Id == id);
-            return result.DeletedCount > 0 ? (IActionResult) Ok() : NotFound();
-        }
-    }
+            var result = await _valueStore.DeleteAsync(id, ct);
 
-    public class Value
-    {
-        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
-        public string Id { get; set; }
-        public string Text { get; set; }
+            if (result.DeletedCount == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using RDB.Api.Business;
 
 namespace RDB.Api
 {
@@ -24,11 +25,19 @@ namespace RDB.Api
             var mongoUrl = new MongoUrl(connectionString);
             services.AddSingleton<IMongoClient>(sl => new MongoClient(mongoUrl));
             services.AddSingleton<IMongoDatabase>(sl => sl.GetService<IMongoClient>().GetDatabase(mongoUrl.DatabaseName));
+            
+            // app
+            services.AddSingleton<ValueStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            
             app.UseMvc();
         }
     }
