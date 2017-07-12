@@ -1,5 +1,5 @@
 # RDB
-API-first RDB POC on .NET Core, Docker and MongoDB.
+API-first RDB POC on .NET Core, Docker and MongoDB: http://rdbagents.northeurope.cloudapp.azure.com/api/values.
 
 - [Getting Started](#getting-started)
 - [Work Guide](#work-guide)
@@ -91,7 +91,23 @@ Setup tasks require investigation, communication and solution decisions. Here is
 - Admin:
   - UI and behavior approved
   - Works in Chrome, Safari, Firefox, Edge, iPhone and Android
-- Merged to master and deployed to test (published from Visual Studio)
+- Merged to master and deployed to Azure
 - Moved to Done Trello column, nobody assigned
 
 *\* (approves and code reviews can be done by any other competent teammate)*
+
+### Deploy Guide
+Continuous deployment is not configured yet. Follow steps below to deploy manually: 
+1. Find SSH key in the solution root directory:
+   - macOS/Linux: `azure.key`
+   - Windows: `azure.ppk`
+2. Create SSH tunnel:
+   - macOS/Linux: `ssh -fNL 2375:localhost:2375 -p 2200 rdb@rdbmgmt.northeurope.cloudapp.azure.com -i azure.key`
+   - Windows: use PuTTY with `azure.ppk` key, see [Azure docs](https://docs.microsoft.com/en-us/azure/container-service/container-service-connect#create-an-ssh-tunnel-on-windows)
+3. Expose Azure SSH tunnel to Docker in the terminal:
+   - macOS/Linux: `export DOCKER_HOST=:2375`
+   - Windows: `$env:DOCKER_HOST=":2375"` in PowerShell or `set DOCKER_HOST=:2375` in cmd  
+   - If connection was successful, `docker info` will now show Azure Swarm cluster information.
+4. Deploy Docker cluster with Azure config:  
+   `docker-compose -f docker-compose.yml -f docker-compose.azure.yml up -d --build`  
+   If containers deployed successfully, `docker ps` will display running Azure Swarm cluster.
