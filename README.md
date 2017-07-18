@@ -22,11 +22,6 @@ Software requirements:
   - [Visual Studio Code](https://code.visualstudio.com/)
   - or whatever else you prefer
 
-Add hosts:
-```
-127.0.0.1	rdb.api
-```
-
 ### Visual Studio
 - Docker: `Ctrl+F5` in docker-compose project. *Debug is not working :(*
 - Local: `Ctrl+F5` in selected project or `F5` for debugging.
@@ -39,7 +34,7 @@ Add hosts:
 - Docker: `docker-compose up -d --build` (in the solution root directory)
 - Local: `dotnet restore` then `dotnet run` (in selected project directory)
 
-Browse http://rdb.api/api/values after container or server is started.
+Browse http://localhost:18420/api/values after container or server is started.
 
 ## Work Guide
 Full task journey from the backlog to production is described below.
@@ -111,3 +106,12 @@ Continuous deployment is not configured yet. Follow steps below to deploy manual
 4. Deploy Docker cluster with Azure config:  
    `docker-compose -f docker-compose.yml -f docker-compose.azure.yml up -d --build`  
    If containers deployed successfully, `docker ps` will display running Azure Swarm cluster.
+
+### DB Guide
+- Data is stored in a local dockerized MongoDB instance. Data files are mapped to `data` directory in the solution root.
+- Handling schema changes:
+  - Any DB schema changes should not break existing code in `master` branch
+  - Code should support both old and new schema versions until all documents are patched on production
+  - Patch old documents to the new schema on writes
+  - See more in [MongoDB .NET Driver docs](https://mongodb.github.io/mongo-csharp-driver/2.4/reference/bson/mapping/schema_changes/)
+- Seeding data: skip this until we defined data import strategy from old-school RDB.
