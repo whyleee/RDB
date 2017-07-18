@@ -5,14 +5,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "18420:80"
-  rdb.admin:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "18421:80"
+      - "80:80"
   mongo:
     ports:
       - "18427:27017"
     volumes:
-      - ./data:/data
+      - data:/data
+
+volumes:
+  data:
