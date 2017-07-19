@@ -3,9 +3,6 @@ WORKDIR /app
 COPY *.csproj ./
 RUN dotnet restore
 COPY . ./
-RUN dotnet publish -c Release -o out
-
-FROM microsoft/aspnetcore:2.0
-WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "RDB.Admin.dll"]
+RUN dotnet publish -c Release -o out \
+ && rm -rf Pages/
+ENTRYPOINT ["dotnet", "out/RDB.Admin.dll"]

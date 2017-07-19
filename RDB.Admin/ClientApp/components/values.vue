@@ -5,8 +5,8 @@
 
     <p v-if="!values"><em>Loading...</em></p>
     <ul v-else>
-      <li v-for="value in values" :key="value">
-        {{value}}
+      <li v-for="value in values" :key="value.id">
+        [{{value.id}}] {{value.text}}
       </li>
     </ul>
   </div>

@@ -13,5 +13,7 @@ services:
     build:
       context: ./RDB.Admin
       dockerfile: Dockerfile
+    links:
+      - rdb.api
   mongo:
     image: mongo
