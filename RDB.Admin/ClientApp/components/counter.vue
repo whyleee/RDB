@@ -9,16 +9,18 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
-  data() {
-    return {
-      count: 0
-    }
+  computed: {
+    ...mapState('counter', [
+      'count'
+    ])
   },
   methods: {
-    increment() {
-      this.count += 1
-    }
+    ...mapMutations('counter', [
+      'increment'
+    ])
   }
 }
 </script>

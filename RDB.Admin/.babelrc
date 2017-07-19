@@ -2,6 +2,7 @@
   "presets": [
     ["env", {
       "targets": { "uglify": false }
-    }]
+    }],
+    "stage-3"
   ]
 }
