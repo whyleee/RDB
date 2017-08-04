@@ -1,0 +1,5 @@
+FROM microsoft/aspnetcore-build:2.0
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+VOLUME /app
+WORKDIR /app
+ENTRYPOINT dotnet restore && dotnet watch run --verbosity q

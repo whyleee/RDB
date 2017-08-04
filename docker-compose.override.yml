@@ -7,12 +7,17 @@ services:
     ports:
       - "18420:80"
   rdb.admin:
+    build:
+      dockerfile: Dockerfile.dev
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=true
     ports:
       - "18421:80"
     volumes:
-      - ./RDB.Admin/node_modules:/app/node_modules
+      - ./RDB.Admin:/app
+      - /app/obj
+      - /app/bin
   mongo:
     ports:
       - "18427:27017"
