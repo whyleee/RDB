@@ -12,7 +12,6 @@ module.exports = (env) => {
       'app': './ClientApp/boot.js'
     },
     resolve: {
-      extensions: ['.js', '.vue'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js'
       }
@@ -28,6 +27,10 @@ module.exports = (env) => {
         { test: /\.js$/, include: /ClientApp/, use: 'babel-loader' },
         { test: /\.css$/, use: !prod ? ['style-loader', 'css-loader'] : ExtractTextPlugin.extract({ use: 'css-loader?minimize' }) }
       ]
+    },
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
     },
     plugins: [
       new webpack.optimize.CommonsChunkPlugin({
