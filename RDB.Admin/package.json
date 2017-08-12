@@ -1,10 +1,6 @@
 {
   "name": "rdb-admin",
   "version": "0.0.0",
-  "scripts": {
-    "start": "cross-env NODE_ENV=development dotnet run",
-    "build": "cross-env NODE_ENV=production webpack -p"
-  },
   "dependencies": {
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
@@ -19,7 +15,6 @@
     "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
-    "cross-env": "^5.0.5",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^3.0.0",
     "style-loader": "^0.18.2",
