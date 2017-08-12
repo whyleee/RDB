@@ -10,16 +10,17 @@
           <v-subheader>GET /api/values</v-subheader>
           <p v-if="!values"><em>Loading...</em></p>
           <v-list v-else>
-            <v-list-tile
+            <value
               v-for="value in values"
               :key="value.id"
-            >
-              <v-list-tile-action>
-                <v-icon>label</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-title>{{value.text}}</v-list-tile-title>
-              <v-list-tile-sub-title>ID: {{value.id}}</v-list-tile-sub-title>
-            </v-list-tile>
+              :value="value"
+            ></value>
+            <li>
+              <v-text-field
+                label="Add value"
+                @keyup.enter="onAddValue"
+              ></v-text-field>
+            </li>
           </v-list>
         </v-card-text>
       </v-card>
@@ -28,17 +29,36 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapState, mapActions } from 'vuex'
+import Value from './value.vue'
 
 export default {
-  data() {
-    return {
-      values: null
-    }
+  components: {
+    Value
   },
-  async created() {
-    let response = await axios.get('http://localhost:18420/api/values')
-    this.values = response.data
+  data() {
+    return {}
+  },
+  created() {
+    this.loadValues();
+  },
+  computed: {
+    ...mapState('values', [
+      'values'
+    ])
+  },
+  methods: {
+    ...mapActions('values', [
+      'loadValues',
+      'addValue'
+    ]),
+    async onAddValue(e) {
+      let text = e.target.value
+      if (text.trim()) {
+        await this.addValue(text)
+      }
+      e.target.value = ''
+    }
   }
 }
 </script>
