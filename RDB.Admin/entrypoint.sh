@@ -16,7 +16,6 @@ if [[ $(uname -s) != *moby ]]; then
     chown user /root/.nuget/packages/.tools
     chown user /root/.npm
     chown user /root/.npm/*
-    chown -R user /root/.aspnet
     chown -R user /root/.local
     chown -R user /tmp/NuGetScratch
     chown -R user /app/bin

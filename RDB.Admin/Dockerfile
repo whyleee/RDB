@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build:2.0 AS build-env
+FROM microsoft/aspnetcore-build:2.0.0-preview2 AS build-env
 WORKDIR /app
 COPY *.csproj ./
 RUN dotnet restore
