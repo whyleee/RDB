@@ -1,7 +1,11 @@
 FROM microsoft/aspnetcore-build:2.0
+
+RUN arch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.10/gosu-$arch" \
+  && chmod +x /usr/local/bin/gosu
+
 ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 VOLUME /app
 WORKDIR /app
-ENTRYPOINT dotnet restore \
-  && npm install \
-  && dotnet watch run
+
+ENTRYPOINT ["./entrypoint.sh", "bash", "-c", "dotnet restore && npm install && dotnet watch run"]

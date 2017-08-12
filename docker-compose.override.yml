@@ -11,18 +11,16 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
       - DOTNET_USE_POLLING_FILE_WATCHER=true
     ports:
-      - "18421:80"
+      - "18421:5000"
     volumes:
       - ./RDB.Admin:/app
-      - /app/obj
       - /app/bin
-  mongo:
-    ports:
-      - "18427:27017"
-    volumes:
-      - data:/data/db
+      - /app/obj
+      - ~/.nuget/packages:/root/.nuget/packages
+      - /root/.nuget/packages/.tools
 
 volumes:
   data:
