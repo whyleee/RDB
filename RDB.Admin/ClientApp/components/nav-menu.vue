@@ -1,7 +1,30 @@
 <template>
-  <ul>
-    <li><router-link to="/">Home</router-link></li>
-    <li><router-link to="/counter">Counter</router-link></li>
-    <li><router-link to="/values">Values</router-link></li>
-  </ul>
+  <v-list>
+    <v-list-tile
+      v-for="item in items"
+      :key="item.url"
+      :to="item.to"
+    >
+      <v-list-tile-action>
+        <v-icon>{{item.icon}}</v-icon>
+      </v-list-tile-action>
+      <v-list-tile-content>
+        <v-list-tile-title>{{item.title}}</v-list-tile-title>
+      </v-list-tile-content>
+    </v-list-tile>
+  </v-list>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      items: [
+        { icon: 'home', title: 'Home', to: '/' },
+        { icon: 'exposure_plus_1', title: 'Counter', to: '/counter' },
+        { icon: 'list', title: 'Values', to: '/values' }
+      ]
+    }
+  }
+}
+</script>

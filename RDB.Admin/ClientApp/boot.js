@@ -3,6 +3,7 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Vuetify from 'vuetify'
 
 import store from './store/store'
 
@@ -12,6 +13,7 @@ import Counter from './components/counter.vue'
 import Values from './components/values.vue'
 
 Vue.use(VueRouter)
+Vue.use(Vuetify)
 
 const routes = [
   { path: '/', component: Home },
