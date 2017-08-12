@@ -25,7 +25,6 @@ module.exports = (env) => {
       rules: [
         { test: /\.vue$/, include: /ClientApp/, use: 'vue-loader' },
         { test: /\.js$/, include: /ClientApp/, use: 'babel-loader' },
-        { test: /\.css$/, use: !prod ? ['style-loader', 'css-loader'] : ExtractTextPlugin.extract({ use: 'css-loader?minimize' }) },
         { test: /\.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader']}
       ]
     },

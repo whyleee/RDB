@@ -1,6 +1,4 @@
-﻿import './css/site.css'
-
-import 'babel-polyfill'
+﻿import 'babel-polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
