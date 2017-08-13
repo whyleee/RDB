@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # switch to local user for linux hosts to fix volume files access rights on the host
-if [[ $(uname -s) != *moby ]]; then
+if [[ $(uname -r) != *moby ]]; then
   USER_ID=${LOCAL_USER_ID:-1000}
 
   if [[ $(id -u user) != $USER_ID ]]; then
