@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-flex xs12 md9>
+    <v-flex xs12 lg9>
       <v-card>
         <v-card-title class="green white--text">
           <div class="headline">Values</div>
@@ -15,10 +15,11 @@
               :key="value.id"
               :value="value"
             ></value>
-            <li>
+            <li class="pl-3">
               <v-text-field
                 label="Add value"
-                @keyup.enter="onAddValue"
+                v-model="newValue"
+                @keyup.enter="addValueIfNotEmpty"
               ></v-text-field>
             </li>
           </v-list>
@@ -37,7 +38,9 @@ export default {
     Value
   },
   data() {
-    return {}
+    return {
+      newValue: ''
+    }
   },
   created() {
     this.loadValues();
@@ -52,12 +55,11 @@ export default {
       'loadValues',
       'addValue'
     ]),
-    async onAddValue(e) {
-      let text = e.target.value
-      if (text.trim()) {
-        await this.addValue(text)
+    async addValueIfNotEmpty(e) {
+      if (this.newValue.trim()) {
+        await this.addValue(this.newValue)
       }
-      e.target.value = ''
+      this.newValue = ''
     }
   }
 }

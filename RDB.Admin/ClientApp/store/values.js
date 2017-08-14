@@ -14,6 +14,12 @@ export default {
     },
     updateText(state, { value, text }) {
       value.text = text
+    },
+    deleteValue(state, id) {
+      let i = state.values.findIndex(val => val.id == id)
+      if (~i) {
+        state.values.splice(i, 1)
+      }
     }
   },
   actions: {
@@ -28,6 +34,10 @@ export default {
     async updateText({ commit }, { value, text }) {
       let response = await api.values.put(value.id, text)
       commit('updateText', { value, text })
+    },
+    async deleteValue({ commit }, id) {
+      let response = await api.values.delete(id)
+      commit('deleteValue', id)
     }
   }
 }

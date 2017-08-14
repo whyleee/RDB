@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-flex xs12 md9>
+    <v-flex xs12 lg9>
       <v-card>
         <v-card-title class="green white--text">
           <div class="headline">Counter</div>
