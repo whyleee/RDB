@@ -1,8 +1,9 @@
 ﻿<template>
-  <v-app>
+  <v-app toolbar>
     <v-navigation-drawer
       persistent
       clipped
+      enable-resize-watcher
       v-model="drawer"
     >
       <nav-menu></nav-menu>
