@@ -1,4 +1,6 @@
-﻿import 'babel-polyfill'
+﻿import './stylus/main.styl'
+
+import 'babel-polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'

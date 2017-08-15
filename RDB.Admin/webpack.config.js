@@ -25,7 +25,7 @@ module.exports = (env) => {
       rules: [
         { test: /\.vue$/, include: /ClientApp/, use: 'vue-loader' },
         { test: /\.js$/, include: /ClientApp/, use: 'babel-loader' },
-        { test: /\.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader']}
+        { test: /\.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader'] }
       ]
     },
     watchOptions: {
@@ -37,7 +37,7 @@ module.exports = (env) => {
         name: 'vendor',
         chunks: ['app'],
         minChunks(module) {
-          return module.context && (/node_modules/).test(module.context)
+          return module.context && (/(node_modules|stylus)/).test(module.context)
         }
       }),
       new webpack.optimize.CommonsChunkPlugin({
