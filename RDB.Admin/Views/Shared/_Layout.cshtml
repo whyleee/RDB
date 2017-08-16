@@ -5,11 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@ViewData["Title"] - RDB.Admin</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+
+  <environment exclude="Development">
+    <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/dist/app.css" asp-append-version="true" />
+  </environment>
 </head>
 <body>
   @RenderBody()
-  
-  <script src="~/dist/manifest.js" asp-append-version="true"></script>
+
   <script src="~/dist/vendor.js" asp-append-version="true"></script>
   @RenderSection("scripts", required: false)
 </body>

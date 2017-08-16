@@ -1,10 +1,13 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const dest = './wwwroot/dist'
 
 module.exports = (env) => {
-  const prod = process.env.NODE_ENV == 'production'
+  const isDevBuild = process.env.NODE_ENV != 'production' && !(env && env.production)
+  process.env.NODE_ENV = isDevBuild ? 'development' : 'production'
 
   return {
     stats: { modules: false },
@@ -23,9 +26,11 @@ module.exports = (env) => {
     },
     module: {
       rules: [
-        { test: /\.vue$/, include: /ClientApp/, use: 'vue-loader' },
+        { test: /\.vue$/, include: /ClientApp/, loader: 'vue-loader', options: isDevBuild ? undefined : { loaders: {
+          stylus: ExtractTextPlugin.extract({ use: ['css-loader', 'stylus-loader'], fallback: 'vue-style-loader' }) } } },
         { test: /\.js$/, include: /ClientApp/, use: 'babel-loader' },
-        { test: /\.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader'] }
+        { test: /\.styl$/, use: isDevBuild ? ['style-loader', 'css-loader', 'stylus-loader']
+          : ExtractTextPlugin.extract({ use: ['css-loader', 'stylus-loader'], fallback: 'style-loader' }) }
       ]
     },
     watchOptions: {
@@ -33,6 +38,11 @@ module.exports = (env) => {
       poll: 1000
     },
     plugins: [
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify(isDevBuild ? 'development' : 'production')
+        }
+      }),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         chunks: ['app'],
@@ -40,15 +50,20 @@ module.exports = (env) => {
           return module.context && (/(node_modules|stylus)/).test(module.context)
         }
       }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'manifest'
-      }),
       new webpack.SourceMapDevToolPlugin({
         filename: '[file].map',
-        moduleFilenameTemplate: path.relative(dest, '[resourcePath]')
+        moduleFilenameTemplate: path.relative(dest, '[resourcePath]'),
+        exclude: ['vendor.js']
       })
-    ].concat(prod ? [
-      new ExtractTextPlugin("site.css")
-    ] : [])
+    ].concat(isDevBuild ? [
+      new webpack.NamedModulesPlugin()
+    ] : [
+      new webpack.HashedModuleIdsPlugin(),
+      new UglifyJSPlugin({
+        sourceMap: true
+      }),
+      new OptimizeCSSPlugin(),
+      new ExtractTextPlugin("[name].css")
+    ])
   }
 }
