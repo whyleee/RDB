@@ -34,7 +34,7 @@ Software requirements:
 - Docker: `docker-compose up -d --build` (in the solution root directory)
 - Local: `dotnet restore` then `dotnet run` (in selected project directory)
 
-Browse http://localhost:18420/api/values for API or http://localhost:18421 for admin after container or server is started.
+Browse http://localhost:8080/api/values for API or http://localhost:8080 for admin after container or server is started.
 
 ## Work Guide
 Full task journey from the backlog to production is described below.

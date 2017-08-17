@@ -17,3 +17,10 @@ services:
       - rdb.api
   mongo:
     image: mongo
+  lb:
+    image: dockercloud/haproxy
+    links:
+      - rdb.api
+      - rdb.admin
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

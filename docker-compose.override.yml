@@ -2,25 +2,40 @@ version: '3'
 
 services:
   rdb.api:
+    build:
+      dockerfile: Dockerfile.dev
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:8080
+      - VIRTUAL_HOST=*:8080/api/*
+      - VIRTUAL_HOST_WEIGHT=1
     ports:
-      - "18420:80"
+      - "8080"
+    volumes:
+      - ./RDB.Api:/app
+      - /app/bin
+      - /app/obj
+      - ~/.nuget/packages:/root/.nuget/packages
+      - /root/.nuget/packages/.tools
   rdb.admin:
     build:
       dockerfile: Dockerfile.dev
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://*:5000
-      - DOTNET_USE_POLLING_FILE_WATCHER=true
+      - ASPNETCORE_URLS=http://*:8080
+      - VIRTUAL_HOST=*:8080
     ports:
-      - "18421:5000"
+      - "8080"
     volumes:
       - ./RDB.Admin:/app
       - /app/bin
       - /app/obj
       - ~/.nuget/packages:/root/.nuget/packages
       - /root/.nuget/packages/.tools
+  lb:
+    ports:
+      - "8080:8080"
+      - "1936:1936"
 
 volumes:
   data:

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RDB.Admin.Models;
 
 namespace RDB.Admin
 {
@@ -24,7 +25,10 @@ namespace RDB.Admin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.AddMvc();
+
+            services.Configure<AppOptions>(Configuration.GetSection("App"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

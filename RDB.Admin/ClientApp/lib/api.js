@@ -3,7 +3,7 @@ import axios from 'axios'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.headers.put['Content-Type'] = 'application/json'
 
-const baseUrl = 'http://localhost:18420/api/'
+const baseUrl = window.apiUrl
 
 export default {
   values: {
