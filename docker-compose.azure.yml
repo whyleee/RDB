@@ -3,14 +3,18 @@ version: '3'
 services:
   rdb.api:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:80
+      - VIRTUAL_HOST=*:80/api/*
+      - VIRTUAL_HOST_WEIGHT=1
+    ports:
+      - "80"
+  rdb.admin:
+    environment:
+      - ASPNETCORE_URLS=http://*:80
+      - VIRTUAL_HOST=*:80
+    ports:
+      - "80"
+  lb:
     ports:
       - "80:80"
-  mongo:
-    ports:
-      - "18427:27017"
-    volumes:
-      - data:/data
-
-volumes:
-  data:
+      - "1936:1936"
