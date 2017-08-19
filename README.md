@@ -99,9 +99,11 @@ Continuous deployment is not configured yet. Follow steps below to deploy manual
 2. Create SSH tunnel:
    - macOS/Linux: `ssh -fNL 2375:localhost:2375 -p 2200 rdb@rdbmgmt.northeurope.cloudapp.azure.com -i azure.key`
    - Windows: use PuTTY with `azure.ppk` key, see [Azure docs](https://docs.microsoft.com/en-us/azure/container-service/container-service-connect#create-an-ssh-tunnel-on-windows)
+
 3. Expose Azure SSH tunnel to Docker in the terminal:
    - macOS/Linux: `export DOCKER_HOST=:2375`
-   - Windows: `$env:DOCKER_HOST=":2375"` in PowerShell or `set DOCKER_HOST=:2375` in cmd  
+   - Windows: `$env:DOCKER_HOST=":2375"` and `$env:COMPOSE_CONVERT_WINDOWS_PATHS=1` in PowerShell  
+     or `set DOCKER_HOST=:2375` and `set COMPOSE_CONVERT_WINDOWS_PATHS=1` in cmd
    - If connection was successful, `docker info` will now show Azure Swarm cluster information.
 4. Deploy Docker cluster with Azure config:  
    `docker-compose -f docker-compose.yml -f docker-compose.azure.yml up -d --build`  
