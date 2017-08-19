@@ -8,4 +8,4 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 VOLUME /app
 WORKDIR /app
 
-ENTRYPOINT ["./entrypoint.sh", "bash", "-c", "dotnet restore && npm install && dotnet watch run"]
+ENTRYPOINT ["./entrypoint.sh", "bash", "-c", "dotnet restore && npm install && dotnet watch run --no-launch-profile"]

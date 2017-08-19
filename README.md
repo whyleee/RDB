@@ -14,27 +14,34 @@ API-first RDB POC on .NET Core, Docker and MongoDB: http://rdbagents.northeurope
 ## Getting Started
 Software requirements:
 - Windows 10, macOS or Linux
-- [Docker](https://www.docker.com/community-edition#/download)
-- [.NET Core 2.0](https://www.microsoft.com/net/core/preview)
+- [Docker](https://www.docker.com/community-edition#/download) ([Docker Compose](https://github.com/docker/compose/releases) is installed separately on Linux)
 - Text editor or IDE of choice:
-  - [Visual Studio 2017 Preview version 15.3](https://www.visualstudio.com/vs/preview/)
-  - [Visual Studio for Mac](https://www.visualstudio.com/vs/visual-studio-mac/) *(Switch to [Beta channel](https://developer.xamarin.com/recipes/cross-platform/ide/change_updates_channel/#visualstudiomac))*
+  - [Visual Studio 2017 (`15.3+`)](https://www.visualstudio.com/vs/)
+  - [Visual Studio for Mac (`7.1+`)](https://www.visualstudio.com/vs/visual-studio-mac/)
+  - [Rider](https://www.jetbrains.com/rider/)
   - [Visual Studio Code](https://code.visualstudio.com/)
   - or whatever else you prefer
+  
+  Make sure [EditorConfig](http://editorconfig.org/#download) is installed in your IDE or text editor.
 
-### Visual Studio
-- Docker: `Ctrl+F5` in docker-compose project. *Debug is not working :(*
-- Local: `Ctrl+F5` in selected project or `F5` for debugging.
+Everything builds and runs inside Docker containers, so no additional tools required to run the apps.
 
-### Visual Studio for Mac
-- Docker: not supported yet. Do manual steps below.
-- Local: run or debug selected project.
+Recommended optional tools for development:
+- [.NET Core SDK 2.0](https://www.microsoft.com/net/core): .NET Core apps development support in IDEs and text editors
+- [Node.js 8+/npm 5+](https://nodejs.org/): to work with npm packages or run node tools like eslint
 
-### Manual
-- Docker: `docker-compose up -d --build` (in the solution root directory)
-- Local: `dotnet restore` then `dotnet run` (in selected project directory)
+Recommended extensions for Visual Studio Code or other text editors:
+- [C#](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp): .NET Core development and debugging support for C#
+- [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig): configures the editor with rules from `.editorconfig` file
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint): integrated JavaScript linting
+- [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur): Vue.js development support
 
-Browse http://localhost:8080/api/values for API or http://localhost:8080 for admin after container or server is started.
+To run the apps, run one of the commands below from the solution root directory:
+- `.\watch.cmd` on Windows or `./watch` on macOS/Linux to run in development mode with dotnet/webpack watch
+- `.\run.cmd` on Windows or `./run` on macOS/Linux to run the apps in production mode
+- `.\deploy.cmd` on Windows or `./deploy` on macOS/Linux to deploy the apps to Azure (see [Deploy Guide](#deploy-guide) for details)
+
+Browse http://localhost:8080/api/values for API or http://localhost:8080 for admin after all containers are started.
 
 ## Work Guide
 Full task journey from the backlog to production is described below.
@@ -110,7 +117,7 @@ Continuous deployment is not configured yet. Follow steps below to deploy manual
    If containers deployed successfully, `docker ps` will display running Azure Swarm cluster.
 
 ### DB Guide
-- Data is stored in a local dockerized MongoDB instance. Data files are mapped to `data` directory in the solution root.
+- Data is handled by local dockerized MongoDB instance. Data files are stored in Docker Compose `data` volume.
 - Handling schema changes:
   - Any DB schema changes should not break existing code in `master` branch
   - Code should support both old and new schema versions until all documents are patched on production
