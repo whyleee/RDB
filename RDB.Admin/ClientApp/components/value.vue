@@ -45,16 +45,16 @@ export default {
     ]),
     async doneEdit(e) {
       if (this.deleting) {
-        return;
+        return
       }
 
-      let text = e.target.value.trim()
-      let { value } = this
+      const text = e.target.value.trim()
+      const { value } = this
 
       if (!text) {
-        this.deleting = true;
+        this.deleting = true
         await this.deleteValue(value.id)
-        this.deleting = false;
+        this.deleting = false
       } else if (this.editing && value.text != text) {
         await this.updateText({ value, text })
       }

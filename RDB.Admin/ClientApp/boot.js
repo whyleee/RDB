@@ -1,5 +1,3 @@
-﻿import './stylus/main.styl'
-
 import 'babel-polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -7,6 +5,7 @@ import Vuetify from 'vuetify'
 
 import store from './store/store'
 
+import './stylus/main.styl'
 import App from './components/app.vue'
 import Home from './components/home.vue'
 import Counter from './components/counter.vue'
@@ -23,9 +22,10 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  routes: routes
+  routes
 })
 
+// eslint-disable-next-line no-new
 new Vue({
   el: '#app',
   store,

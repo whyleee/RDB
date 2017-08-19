@@ -16,7 +16,7 @@ export default {
       value.text = text
     },
     deleteValue(state, id) {
-      let i = state.values.findIndex(val => val.id == id)
+      const i = state.values.findIndex(val => val.id == id)
       if (~i) {
         state.values.splice(i, 1)
       }
@@ -24,19 +24,19 @@ export default {
   },
   actions: {
     async loadValues({ commit }) {
-      let response = await api.values.get()
+      const response = await api.values.get()
       commit('setValues', response.data)
     },
     async addValue({ commit }, text) {
-      let response = await api.values.post(text)
+      const response = await api.values.post(text)
       commit('addValue', response.data)
     },
     async updateText({ commit }, { value, text }) {
-      let response = await api.values.put(value.id, text)
+      await api.values.put(value.id, text)
       commit('updateText', { value, text })
     },
     async deleteValue({ commit }, id) {
-      let response = await api.values.delete(id)
+      await api.values.delete(id)
       commit('deleteValue', id)
     }
   }

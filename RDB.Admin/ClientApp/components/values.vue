@@ -43,7 +43,7 @@ export default {
     }
   },
   created() {
-    this.loadValues();
+    this.loadValues()
   },
   computed: {
     ...mapState('values', [
@@ -55,7 +55,7 @@ export default {
       'loadValues',
       'addValue'
     ]),
-    async addValueIfNotEmpty(e) {
+    async addValueIfNotEmpty() {
       if (this.newValue.trim()) {
         await this.addValue(this.newValue)
       }

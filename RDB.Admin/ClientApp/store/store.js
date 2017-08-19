@@ -19,8 +19,10 @@ if (module.hot) {
   ], () => {
     store.hotUpdate({
       modules: {
+        /* eslint-disable global-require */
         counter: require('./counter').default,
         values: require('./values').default
+        /* eslint-enable */
       }
     })
   })
