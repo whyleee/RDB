@@ -2,8 +2,6 @@ version: '3'
 
 services:
   rdb.api:
-    build:
-      dockerfile: Dockerfile.watch
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:8080
@@ -11,15 +9,9 @@ services:
       - VIRTUAL_HOST_WEIGHT=1
     ports:
       - "8080"
-    volumes:
-      - ./RDB.Api:/app
-      - /app/bin
-      - /app/obj
-      - ~/.nuget/packages:/root/.nuget/packages
-      - /root/.nuget/packages/.tools
   rdb.admin:
     build:
-      dockerfile: Dockerfile.watch
+      dockerfile: Dockerfile.dev
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:8080
@@ -30,8 +22,7 @@ services:
       - ./RDB.Admin:/app
       - /app/bin
       - /app/obj
-      - ~/.nuget/packages:/root/.nuget/packages
-      - /root/.nuget/packages/.tools
+      - /app/node_modules
   lb:
     ports:
       - "8080:8080"
