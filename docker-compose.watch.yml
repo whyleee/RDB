@@ -19,10 +19,7 @@ services:
     ports:
       - "8080"
     volumes:
-      - ./RDB.Admin:/app
-      - /app/bin
-      - /app/obj
-      - /app/node_modules
+      - ./RDB.Admin/ClientApp:/app/ClientApp
   lb:
     ports:
       - "8080:8080"
