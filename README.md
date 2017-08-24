@@ -76,7 +76,7 @@ Setup tasks require investigation, communication and solution decisions. Here is
 - Admin:
   - Mobile first
   - Based on current RDB look
-  - Make it nice
+  - Material design using [Vuetify](https://vuetifyjs.com/) components
 - Review the code and refactor
 - Create a pull request
 
@@ -94,7 +94,9 @@ Setup tasks require investigation, communication and solution decisions. Here is
   - Version bumped (semver)
 - Admin:
   - UI and behavior approved
-  - Works in Chrome, Safari, Firefox, Edge, iPhone and Android
+  - Works in latest Chrome, Safari, Edge, Firefox, iPhone and Android
+  - Works the same in production mode
+  - ESLint is green
 - Merged to master and deployed to Azure
 - Moved to Done Trello column, nobody assigned
 
