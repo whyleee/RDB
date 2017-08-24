@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+
 const dest = './wwwroot/dist'
 
 module.exports = (env) => {
@@ -12,11 +13,11 @@ module.exports = (env) => {
   return {
     stats: { modules: false },
     entry: {
-      'app': './ClientApp/boot.js'
+      app: './ClientApp/app.js'
     },
     resolve: {
       alias: {
-        'vue$': 'vue/dist/vue.esm.js'
+        vue$: 'vue/dist/vue.esm.js'
       }
     },
     output: {
@@ -26,11 +27,13 @@ module.exports = (env) => {
     },
     module: {
       rules: [
+        /* eslint-disable object-property-newline */
         { test: /\.vue$/, include: /ClientApp/, loader: 'vue-loader', options: isDevBuild ? undefined : { loaders: {
           stylus: ExtractTextPlugin.extract({ use: ['css-loader', 'stylus-loader'], fallback: 'vue-style-loader' }) } } },
         { test: /\.js$/, include: /ClientApp/, use: 'babel-loader' },
         { test: /\.styl$/, use: isDevBuild ? ['style-loader', 'css-loader', 'stylus-loader']
           : ExtractTextPlugin.extract({ use: ['css-loader', 'stylus-loader'], fallback: 'style-loader' }) }
+        /* eslint-enable */
       ]
     },
     watchOptions: {
@@ -63,7 +66,7 @@ module.exports = (env) => {
         sourceMap: true
       }),
       new OptimizeCSSPlugin(),
-      new ExtractTextPlugin("[name].css")
+      new ExtractTextPlugin('[name].css')
     ])
   }
 }

@@ -3,7 +3,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
 
-import store from './store/store'
+import store from './store'
 
 import './stylus/main.styl'
 import App from './components/app.vue'
