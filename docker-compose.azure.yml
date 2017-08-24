@@ -1,14 +1,14 @@
 version: '3'
 
 services:
-  rdb.api:
+  api:
     environment:
       - ASPNETCORE_URLS=http://*:80
       - VIRTUAL_HOST=*:80/api/*
       - VIRTUAL_HOST_WEIGHT=1
     ports:
       - "80"
-  rdb.admin:
+  admin:
     environment:
       - ASPNETCORE_URLS=http://*:80
       - VIRTUAL_HOST=*:80

@@ -1,20 +1,18 @@
 version: '3'
 
 services:
-  rdb.api:
-    image: rdb.api
+  api:
     build:
       context: ./RDB.Api
       dockerfile: Dockerfile
     links:
       - mongo
-  rdb.admin:
-    image: rdb.admin
+  admin:
     build:
       context: ./RDB.Admin
       dockerfile: Dockerfile
     links:
-      - rdb.api
+      - api
   mongo:
     image: mongo
     volumes:
@@ -22,8 +20,8 @@ services:
   lb:
     image: dockercloud/haproxy
     links:
-      - rdb.api
-      - rdb.admin
+      - api
+      - admin
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
