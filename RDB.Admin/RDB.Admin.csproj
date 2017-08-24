@@ -12,8 +12,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0-preview2-final" />
   </ItemGroup>
 
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish" Condition="'$(ASPNETCORE_ENVIRONMENT)' == 'Production'">
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish" Condition="'$(ASPNETCORE_ENVIRONMENT)'!='Development'">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Message Text="Webpack build for $(MSBuildProjectName) -> wwwroot/dist" Importance="High" />
     <Exec Command="node node_modules/webpack/bin/webpack.js --env.production" />
 
     <!-- Include the newly-built files in the publish output -->

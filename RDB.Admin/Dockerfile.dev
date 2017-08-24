@@ -5,6 +5,7 @@ RUN npm install
 COPY *.csproj .
 RUN dotnet restore
 COPY . .
+ENV ASPNETCORE_ENVIRONMENT=Development
 RUN dotnet publish -c Release -o /app/bin
 
 ENTRYPOINT ["dotnet", "bin/RDB.Admin.dll"]

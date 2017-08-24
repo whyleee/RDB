@@ -9,7 +9,7 @@
       <nav-menu></nav-menu>
     </v-navigation-drawer>
     <v-toolbar fixed>
-      <v-toolbar-side-icon @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title v-text="title"></v-toolbar-title>
     </v-toolbar>
     <main>
