@@ -16,6 +16,8 @@ Software requirements:
 - Windows 10, macOS or Linux
 - [Docker](https://www.docker.com/community-edition#/download) ([Docker Compose](https://github.com/docker/compose/releases) is installed separately on Linux)
 
+> Docker requires virtualization to be enabled in the BIOS. Steps are vendor specific, but typically the BIOS option is called `Virtualization Technology` and located in `Advanced CPU Configuration` section.
+
 Use `run` command from the solution root directory to build and start the app.  
 Use `run --production` to run in production mode.
 
@@ -42,6 +44,8 @@ Recommended extensions for Visual Studio Code or other text editors:
 
 Use `run` command from the solution root directory to start the app and webpack watch.  
 Use `build` command from the project directory to rebuild and restart a single container for the active project.
+
+> Docker containers don't share npm and NuGet packages with the host machine. Remember to run `npm install` and `dotnet restore` commands in the active project directory to resolve all references in the text editor or IDE.
 
 All client-side changes in `RDB.Admin/ClientApp` directory are watched by webpack and update the browser using hot modules replacement. Other changes including C# and cshtml files require container rebuild.
 
