@@ -16,7 +16,9 @@
       ></v-text-field>
       <template v-else>{{value.text}}</template>
     </v-list-tile-title>
-    <v-list-tile-sub-title>ID: {{value.id}}</v-list-tile-sub-title>
+    <v-list-tile-sub-title class="hidden-xs-only">
+      ID: {{value.id}}
+    </v-list-tile-sub-title>
     <v-list-tile-action class="value-item-actions">
       <v-btn icon @click.stop="deleteValue(value.id)">
         <v-icon>delete</v-icon>
