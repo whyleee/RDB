@@ -1,5 +1,5 @@
 # RDB
-API-first RDB POC on .NET Core, Docker and MongoDB: http://rdbagents.northeurope.cloudapp.azure.com/api/values.
+API-first RDB POC on .NET Core, Docker and MongoDB: http://rdb.northeurope.cloudapp.azure.com.
 
 - [Getting Started](#getting-started)
 - [Work Guide](#work-guide)
