@@ -1,5 +1,5 @@
 # RDB
-API-first RDB POC on .NET Core, Docker and MongoDB: http://rdbagents.northeurope.cloudapp.azure.com/api/values.
+API-first RDB POC on .NET Core, Docker and MongoDB: http://rdb.northeurope.cloudapp.azure.com.
 
 - [Getting Started](#getting-started)
 - [Work Guide](#work-guide)
@@ -14,27 +14,40 @@ API-first RDB POC on .NET Core, Docker and MongoDB: http://rdbagents.northeurope
 ## Getting Started
 Software requirements:
 - Windows 10, macOS or Linux
-- [Docker](https://www.docker.com/community-edition#/download)
-- [.NET Core 2.0](https://www.microsoft.com/net/core/preview)
+- [Docker](https://www.docker.com/community-edition#/download) ([Docker Compose](https://github.com/docker/compose/releases) is installed separately on Linux)
+
+> Docker requires virtualization to be enabled in the BIOS. Steps are vendor specific, but typically the BIOS option is called `Virtualization Technology` and located in `Advanced CPU Configuration` section.
+
+Use `run` command from the solution root directory to build and start the app.  
+Use `run --production` to run in production mode.
+
+Browse http://localhost:8080/api/values for API or http://localhost:8080 for admin after all containers are started.
+
+### Development Setup
+Install additional tools for development:
+- [.NET Core SDK 2.0](https://www.microsoft.com/net/core): to work with nuget packages and add .NET Core support to IDEs and text editors
+- [Node.js 8+/npm 5+](https://nodejs.org/): to work with npm packages or run node tools like eslint
 - Text editor or IDE of choice:
-  - [Visual Studio 2017 Preview version 15.3](https://www.visualstudio.com/vs/preview/)
-  - [Visual Studio for Mac](https://www.visualstudio.com/vs/visual-studio-mac/) *(Switch to [Beta channel](https://developer.xamarin.com/recipes/cross-platform/ide/change_updates_channel/#visualstudiomac))*
+  - [Visual Studio 2017 (`15.3+`)](https://www.visualstudio.com/vs/)
+  - [Visual Studio for Mac (`7.1+`)](https://www.visualstudio.com/vs/visual-studio-mac/)
+  - [Rider](https://www.jetbrains.com/rider/) (*doesn't support .NET Core 2.0 yet*)
   - [Visual Studio Code](https://code.visualstudio.com/)
   - or whatever else you prefer
 
-### Visual Studio
-- Docker: `Ctrl+F5` in docker-compose project. *Debug is not working :(*
-- Local: `Ctrl+F5` in selected project or `F5` for debugging.
+> Make sure [EditorConfig](http://editorconfig.org/#download) is installed in your IDE or text editor to follow code indent guidelines.
 
-### Visual Studio for Mac
-- Docker: not supported yet. Do manual steps below.
-- Local: run or debug selected project.
+Recommended extensions for Visual Studio Code or other text editors:
+- [C#](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp): .NET Core development and debugging support for C#
+- [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig): configures the editor with rules from `.editorconfig` file
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint): integrated JavaScript linting
+- [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur): Vue.js development support
 
-### Manual
-- Docker: `docker-compose up -d --build` (in the solution root directory)
-- Local: `dotnet restore` then `dotnet run` (in selected project directory)
+Use `run` command from the solution root directory to start the app and webpack watch.  
+Use `build` command from the project directory to rebuild and restart a single container for the active project.
 
-Browse http://localhost:18420/api/values after container or server is started.
+> Docker containers don't share npm and NuGet packages with the host machine. Remember to run `npm install` and `dotnet restore` commands in the active project directory to resolve all references in the text editor or IDE.
+
+All client-side changes in `RDB.Admin/ClientApp` directory are watched by webpack and update the browser using hot modules replacement. Other changes including C# and cshtml files require container rebuild.
 
 ## Work Guide
 Full task journey from the backlog to production is described below.
@@ -67,7 +80,7 @@ Setup tasks require investigation, communication and solution decisions. Here is
 - Admin:
   - Mobile first
   - Based on current RDB look
-  - Make it nice
+  - Material design using [Vuetify](https://vuetifyjs.com/) components
 - Review the code and refactor
 - Create a pull request
 
@@ -85,7 +98,9 @@ Setup tasks require investigation, communication and solution decisions. Here is
   - Version bumped (semver)
 - Admin:
   - UI and behavior approved
-  - Works in Chrome, Safari, Firefox, Edge, iPhone and Android
+  - Works in latest Chrome, Safari, Edge, Firefox, iPhone and Android
+  - Works the same in production mode
+  - ESLint is green
 - Merged to master and deployed to Azure
 - Moved to Done Trello column, nobody assigned
 
@@ -99,16 +114,18 @@ Continuous deployment is not configured yet. Follow steps below to deploy manual
 2. Create SSH tunnel:
    - macOS/Linux: `ssh -fNL 2375:localhost:2375 -p 2200 rdb@rdbmgmt.northeurope.cloudapp.azure.com -i azure.key`
    - Windows: use PuTTY with `azure.ppk` key, see [Azure docs](https://docs.microsoft.com/en-us/azure/container-service/container-service-connect#create-an-ssh-tunnel-on-windows)
+
 3. Expose Azure SSH tunnel to Docker in the terminal:
    - macOS/Linux: `export DOCKER_HOST=:2375`
-   - Windows: `$env:DOCKER_HOST=":2375"` in PowerShell or `set DOCKER_HOST=:2375` in cmd  
+   - Windows: `$env:DOCKER_HOST=":2375"` and `$env:COMPOSE_CONVERT_WINDOWS_PATHS=1` in PowerShell  
+     or `set DOCKER_HOST=:2375` and `set COMPOSE_CONVERT_WINDOWS_PATHS=1` in cmd
    - If connection was successful, `docker info` will now show Azure Swarm cluster information.
-4. Deploy Docker cluster with Azure config:  
-   `docker-compose -f docker-compose.yml -f docker-compose.azure.yml up -d --build`  
+4. Deploy Docker cluster with Azure config using command in the solution root directory:  
+   `./deploy`  
    If containers deployed successfully, `docker ps` will display running Azure Swarm cluster.
 
 ### DB Guide
-- Data is stored in a local dockerized MongoDB instance. Data files are mapped to `data` directory in the solution root.
+- Data is handled by local dockerized MongoDB instance. Data files are stored in Docker Compose `data` volume.
 - Handling schema changes:
   - Any DB schema changes should not break existing code in `master` branch
   - Code should support both old and new schema versions until all documents are patched on production

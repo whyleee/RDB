@@ -296,5 +296,5 @@ __pycache__/
 
 #######################################
 
-# MongoDB data dir
-/data/
+# Webpack build output
+dist/
