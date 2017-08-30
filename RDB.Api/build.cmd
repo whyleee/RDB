@@ -1,5 +1,8 @@
+@echo off
 if "%1" == "--production" (
-  docker-compose up -d --no-deps --build api
+  docker-compose -f ..\docker-compose.yml -f ..\docker-compose.production.yml up -d --no-deps --build api
+) else if "%1" == "--azure" (
+  docker-compose -f ..\docker-compose.yml -f ..\docker-compose.azure.yml up -d --no-deps --build api
 ) else (
-  docker-compose -f ..\docker-compose.yml -f ..\docker-compose.dev.yml up -d --no-deps --build api
+  docker-compose up -d --no-deps --build api
 )

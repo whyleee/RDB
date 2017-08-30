@@ -121,7 +121,7 @@ Continuous deployment is not configured yet. Follow steps below to deploy manual
      or `set DOCKER_HOST=:2375` and `set COMPOSE_CONVERT_WINDOWS_PATHS=1` in cmd
    - If connection was successful, `docker info` will now show Azure Swarm cluster information.
 4. Deploy Docker cluster with Azure config using command in the solution root directory:  
-   `./deploy`  
+   `./run --azure`  
    If containers deployed successfully, `docker ps` will display running Azure Swarm cluster.
 
 ### DB Guide
