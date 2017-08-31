@@ -49,6 +49,10 @@ Use `build` command from the project directory to rebuild and restart a single c
 
 All client-side changes in `RDB.Admin/ClientApp` directory are watched by webpack and update the browser using hot modules replacement. Other changes including C# and cshtml files require container rebuild.
 
+Backend debug is working in Visual Studio 2017. Set `docker-compose` as startup project and press `F5`. Visual Studio will build containers with its debugger inside, run Docker Compose and connect to the debuggers. By default Visual Studio launches Docker Compose with the modified project name, so containers will have different names and own volumes. To reuse container names and volumes from the command-line mode, put [fixed Microsoft.Docker.dll](https://drive.google.com/open?id=0B6zzxGJlEvj6N3hqMFZEME5zVjA) to these locations:
+- `C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools`
+- `C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\Extensions\k3mvm330.k1s`
+
 ## Work Guide
 Full task journey from the backlog to production is described below.
 
