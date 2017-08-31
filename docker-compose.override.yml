@@ -2,6 +2,8 @@ version: '3'
 
 services:
   api:
+    build:
+      dockerfile: Dockerfile${DOCKERFILE_EXT}
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:8080
@@ -11,7 +13,7 @@ services:
       - "8080"
   admin:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile${DOCKERFILE_EXT:-.dev}
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:8080

@@ -1,0 +1,31 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "taskName": "run",
+      "type": "shell",
+      "command": "./run",
+      "problemMatcher": []
+    },
+    {
+      "taskName": "debug",
+      "type": "shell",
+      "command": "./run --debug",
+      "problemMatcher": []
+    },
+    {
+      "taskName": "production",
+      "type": "shell",
+      "command": "./run --production",
+      "problemMatcher": []
+    },
+    {
+      "taskName": "azure",
+      "type": "shell",
+      "command": "./run --azure",
+      "problemMatcher": []
+    }
+  ]
+}

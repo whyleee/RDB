@@ -1,0 +1,67 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "RDB.Admin",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "debug",
+      "program": "/app/bin/RDB.Admin.dll",
+      "args": [],
+      "cwd": "/app",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "sourceFileMap": {
+        "/app": "${workspaceRoot}/RDB.Admin"
+      },
+      "pipeTransport": {
+        "debuggerPath": "/root/vsdbg/vsdbg",
+        "pipeProgram": "/bin/bash",
+        "pipeCwd": "${workspaceRoot}",
+        "pipeArgs": [
+          "-c",
+          "docker exec -i rdb_admin_1 ${debuggerCommand}"
+        ],
+        "windows": {
+          "pipeProgram": "cmd",
+          "pipeCwd": "${workspaceRoot}",
+          "pipeArgs": [
+            "/c",
+            "docker exec -i rdb_admin_1 ${debuggerCommand}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "RDB.Api",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "debug",
+      "program": "/app/RDB.Api.dll",
+      "args": [],
+      "cwd": "/app",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "sourceFileMap": {
+        "/app": "${workspaceRoot}/RDB.Api"
+      },
+      "pipeTransport": {
+        "debuggerPath": "/root/vsdbg/vsdbg",
+        "pipeProgram": "/bin/bash",
+        "pipeCwd": "${workspaceRoot}",
+        "pipeArgs": [
+          "-c",
+          "docker exec -i rdb_api_1 ${debuggerCommand}"
+        ],
+        "windows": {
+          "pipeProgram": "cmd",
+          "pipeCwd": "${workspaceRoot}",
+          "pipeArgs": [
+            "/c",
+            "docker exec -i rdb_api_1 ${debuggerCommand}"
+          ]
+        }
+      }
+    }
+  ]
+}
