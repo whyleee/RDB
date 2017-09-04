@@ -54,7 +54,7 @@ All client-side changes in `RDB.Admin/ClientApp` directory are watched by webpac
 #### Visual Studio 2017
 Set `docker-compose` as startup project and press `Ctrl+F5` to build and run the apps or `F5` to start debugging.
 
-By default Visual Studio launches Docker Compose with the modified project name, so all containers and volumes will be namespaced to that name. To reuse container names and volumes from the command-line mode, put [fixed Microsoft.Docker.dll](https://drive.google.com/open?id=0B6zzxGJlEvj6N3hqMFZEME5zVjA) to these locations:
+By default Visual Studio launches Docker Compose with the modified project name, so all containers and volumes will be namespaced to that name. To reuse container names and volumes from the command-line mode, put [fixed Microsoft.Docker.dll](https://drive.google.com/open?id=0B6zzxGJlEvj6N3hqMFZEME5zVjA) to these locations: (*Replace `Community` if you have another Visual Studio edition, eg `Professional`*)
 - `C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools`
 - `C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\Extensions\k3mvm330.k1s`
 
