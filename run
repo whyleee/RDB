@@ -3,6 +3,9 @@ if [ "$1" = "--production" ]; then
   docker-compose -f docker-compose.yml -f docker-compose.production.yml up --build
 elif [ "$1" = "--azure" ]; then
   docker-compose -f docker-compose.yml -f docker-compose.azure.yml up -d --build
+elif [ "$1" = "--debug" ]; then
+  export DOCKERFILE_EXT=.debug
+  docker-compose up -d --build
 else
   docker-compose up --build
 fi

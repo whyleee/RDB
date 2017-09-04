@@ -29,8 +29,8 @@ Install additional tools for development:
 - [Node.js 8+/npm 5+](https://nodejs.org/): to work with npm packages or run node tools like eslint
 - Text editor or IDE of choice:
   - [Visual Studio 2017 (`15.3+`)](https://www.visualstudio.com/vs/)
-  - [Visual Studio for Mac (`7.1+`)](https://www.visualstudio.com/vs/visual-studio-mac/)
-  - [Rider](https://www.jetbrains.com/rider/) (*doesn't support .NET Core 2.0 yet*)
+  - [Visual Studio for Mac (`7.2+`)](https://www.visualstudio.com/vs/visual-studio-mac/) *(Switch to [Alpha channel](https://docs.microsoft.com/en-us/visualstudio/mac/update) for Docker support, unstable)*
+  - [Rider 2017.2+](https://www.jetbrains.com/rider/eap/) *(Docker debug not supported [yet](https://youtrack.jetbrains.com/issue/RIDER-6410))*
   - [Visual Studio Code](https://code.visualstudio.com/)
   - or whatever else you prefer
 
@@ -42,16 +42,31 @@ Recommended extensions for Visual Studio Code or other text editors:
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint): integrated JavaScript linting
 - [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur): Vue.js development support
 
+#### Command-line
+
 Use `run` command from the solution root directory to start the app and webpack watch.  
 Use `build` command from the project directory to rebuild and restart a single container for the active project.
 
-> Docker containers don't share npm and NuGet packages with the host machine. Remember to run `npm install` and `dotnet restore` commands in the active project directory to resolve all references in the text editor or IDE.
+> :warning: Docker containers don't share npm and NuGet packages with the host machine. Remember to run `npm install` and `dotnet restore` commands in the active project directory to resolve all references in the text editor or IDE.
 
 All client-side changes in `RDB.Admin/ClientApp` directory are watched by webpack and update the browser using hot modules replacement. Other changes including C# and cshtml files require container rebuild.
 
-Backend debug is working in Visual Studio 2017. Set `docker-compose` as startup project and press `F5`. Visual Studio will build containers with its debugger inside, run Docker Compose and connect to the debuggers. By default Visual Studio launches Docker Compose with the modified project name, so containers will have different names and own volumes. To reuse container names and volumes from the command-line mode, put [fixed Microsoft.Docker.dll](https://drive.google.com/open?id=0B6zzxGJlEvj6N3hqMFZEME5zVjA) to these locations:
+#### Visual Studio 2017
+Set `docker-compose` as startup project and press `Ctrl+F5` to build and run the apps or `F5` to start debugging.
+
+By default Visual Studio launches Docker Compose with the modified project name, so all containers and volumes will be namespaced to that name. To reuse container names and volumes from the command-line mode, put [fixed Microsoft.Docker.dll](https://drive.google.com/open?id=0B6zzxGJlEvj6N3hqMFZEME5zVjA) to these locations:
 - `C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools`
 - `C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\Extensions\k3mvm330.k1s`
+
+#### Visual Studio for Mac
+Set `docker-compose` as startup project and press `Opt+Cmd+Return` to build and run the apps or `Cmd+Return` to start debugging.
+
+> Docker debug is in alpha release now and unstable. Admin container debug is not working and we're waiting for the release version to fix `Microsoft.Docker.dll` for Mac. Switch to Visual Studio Code if something is not working until Visual Studio for Mac 7.2 is released.
+
+#### Visual Studio Code
+Press `Ctrl+Shift+B` to build and run the apps or `Ctrl+P`, type 'task', 'Space' and the command name to run in specific modes.
+
+To debug the containers, go to Debug view (`Ctrl+Shift+D`), select target project and press `F5`. Select another project and press `F5` to add it to the current debug session.
 
 ## Work Guide
 Full task journey from the backlog to production is described below.

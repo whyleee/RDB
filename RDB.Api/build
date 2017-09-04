@@ -3,6 +3,9 @@ if [ "$1" = "--production" ]; then
   docker-compose -f ../docker-compose.yml -f ../docker-compose.production.yml up -d --no-deps --build api
 elif [ "$1" = "--azure" ]; then
   docker-compose -f ../docker-compose.yml -f ../docker-compose.azure.yml up -d --no-deps --build api
+elif [ "$1" = "--debug" ]; then
+  export DOCKERFILE_EXT=.debug
+  docker-compose up -d --no-deps --build api
 else
   docker-compose up -d --no-deps --build api
 fi
