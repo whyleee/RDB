@@ -2,18 +2,26 @@ version: '3'
 
 services:
   api:
+    build:
+      dockerfile: Dockerfile${DOCKERFILE_EXT}
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:8080
       - VIRTUAL_HOST=*:8080/api/*
       - VIRTUAL_HOST_WEIGHT=1
     ports:
       - "8080"
   admin:
+    build:
+      dockerfile: Dockerfile${DOCKERFILE_EXT:-.dev}
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:8080
       - VIRTUAL_HOST=*:8080
     ports:
       - "8080"
+    volumes:
+      - ./RDB.Admin/ClientApp:/app/ClientApp
   lb:
     ports:
       - "8080:8080"

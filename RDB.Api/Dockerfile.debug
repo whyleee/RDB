@@ -1,0 +1,14 @@
+FROM microsoft/aspnetcore-build:2.0.0 AS builder
+WORKDIR /app
+COPY *.csproj .
+RUN dotnet restore
+COPY . .
+RUN dotnet publish -c Debug -o /app/bin --no-restore
+
+FROM microsoft/aspnetcore:2.0.0
+RUN apt-get update \
+  && apt-get install unzip \
+  && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg
+WORKDIR /app
+COPY --from=builder /app/bin .
+ENTRYPOINT ["tail", "-f", "/dev/null"]

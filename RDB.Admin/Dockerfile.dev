@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build:2.0.0-preview2 AS builder
+FROM microsoft/aspnetcore-build:2.0.0 AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
@@ -6,6 +6,6 @@ COPY *.csproj .
 RUN dotnet restore
 COPY . .
 ENV ASPNETCORE_ENVIRONMENT=Development
-RUN dotnet publish -c Release -o /app/bin
+RUN dotnet publish -c Release -o /app/bin --no-restore
 
 ENTRYPOINT ["dotnet", "bin/RDB.Admin.dll"]
