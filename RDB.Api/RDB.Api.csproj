@@ -15,4 +15,15 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
+
+  <Target Name="PublishCopySwaggerUI" AfterTargets="ComputeFilesToPublish">
+    <!-- Include swagger-ui-dist files in the publish output -->
+    <ItemGroup>
+      <SwaggerUIFiles Include="node_modules\swagger-ui-dist\**" />
+      <ResolvedFileToPublish Include="@(SwaggerUIFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(SwaggerUIFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
 </Project>

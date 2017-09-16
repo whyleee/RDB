@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using RDB.Api.Business;
 using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
 
 namespace RDB.Api
@@ -55,12 +60,16 @@ namespace RDB.Api
                 c.RouteTemplate = "{documentName}/swagger.json";
             });
 
-            app.UseSwaggerUI(c =>
+            var swaggerUiDir = Path.Combine(Directory.GetCurrentDirectory(), "node_modules/swagger-ui-dist");
+            app.UseFileServer(new FileServerOptions
             {
-                c.RoutePrefix = "api";
-                c.SwaggerEndpoint("/api/swagger.json", "RDB API");
+                RequestPath = "/api",
+                FileProvider = new SwaggerUiFileProvider(swaggerUiDir, new SwaggerUiOptions
+                {
+                    Url = "/api/swagger.json"
+                })
             });
-            
+
             app.UseMvc();
         }
     }
