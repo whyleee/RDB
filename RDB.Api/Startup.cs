@@ -27,7 +27,7 @@ namespace RDB.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "RDB API", Version = "v1" });
+                c.SwaggerDoc("api", new Info { Title = "RDB API", Version = "0.0" });
             });
 
             // mongodb
@@ -50,11 +50,15 @@ namespace RDB.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "{documentName}/swagger.json";
+            });
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "RDB API V1");
+                c.RoutePrefix = "api";
+                c.SwaggerEndpoint("/api/swagger.json", "RDB API");
             });
             
             app.UseMvc();
