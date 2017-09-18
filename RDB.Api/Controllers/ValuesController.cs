@@ -10,7 +10,12 @@ using RDB.Api.Models;
 
 namespace RDB.Api.Controllers
 {
+    /// <summary>
+    /// Manages and queries values.
+    /// </summary>
     [Route("api/[controller]")]
+    [Produces("application/json")]
+    [Consumes("application/json")]
     public class ValuesController : Controller
     {
         private readonly ValueStore _valueStore;
@@ -20,15 +25,25 @@ namespace RDB.Api.Controllers
             _valueStore = valueStore;
         }
 
-        // GET api/values
+        /// <summary>
+        /// Get all values.
+        /// </summary>
+        /// <param name="ct">Cancellation token.</param>
         [HttpGet]
+        [ProducesResponseType(typeof(IList<Value>), 200)]
         public Task<IList<Value>> Get(CancellationToken ct)
         {
             return _valueStore.GetAllAsync(ct);
         }
 
-        // GET api/values/5
+        /// <summary>
+        /// Get value by ID.
+        /// </summary>
+        /// <param name="id">ID of value to return.</param>
+        /// <param name="ct">Cancellation token.</param>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Value), 200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Get(string id, CancellationToken ct)
         {
             var value = await _valueStore.GetByIdAsync(id, ct);
@@ -41,13 +56,19 @@ namespace RDB.Api.Controllers
             return Ok(value);
         }
 
-        // POST api/values
+        /// <summary>
+        /// Create new value.
+        /// </summary>
+        /// <param name="text">New value text.</param>
+        /// <param name="ct">Cancellation token.</param>
         [HttpPost]
+        [ProducesResponseType(typeof(Value), 200)]
+        [ProducesResponseType(typeof(IDictionary<string, IList<string>>), 400)]
         public async Task<IActionResult> Post([FromBody][Required]string text, CancellationToken ct)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             
             var value = new Value { Text = text };
@@ -56,13 +77,21 @@ namespace RDB.Api.Controllers
             return Ok(value);
         }
 
-        // PUT api/values/5
+        /// <summary>
+        /// Update existing value text.
+        /// </summary>
+        /// <param name="id">ID of value to update.</param>
+        /// <param name="text">New value text.</param>
+        /// <param name="ct">Cancellation token.</param>
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(Value), 200)]
+        [ProducesResponseType(typeof(IDictionary<string, IList<string>>), 400)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Put(string id, [FromBody][Required]string text, CancellationToken ct)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             var value = new Value { Id = id, Text = text };
@@ -76,8 +105,14 @@ namespace RDB.Api.Controllers
             return Ok(value);
         }
 
-        // DELETE api/values/5
+        /// <summary>
+        /// Delete value by ID.
+        /// </summary>
+        /// <param name="id">ID of value to delete.</param>
+        /// <param name="ct">Cancellation token.</param>
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Value), 200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteAsync(string id, CancellationToken ct)
         {
             var result = await _valueStore.DeleteAsync(id, ct);

@@ -7,10 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RDB.Api.Controllers
 {
+    /// <summary>
+    /// Returns info about API host OS.
+    /// </summary>
     [Route("api/[controller]")]
+    [Produces("text/plain")]
     public class InfoController : Controller
     {
-        // Get OS name and environment name, just for Docker testing
+        /// <summary>
+        /// Get OS name, version and environment name.
+        /// </summary>
+        /// <remarks>Just for Docker testing.</remarks>
         [HttpGet]
         public string Get()
         {

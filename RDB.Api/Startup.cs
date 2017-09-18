@@ -32,7 +32,17 @@ namespace RDB.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("api", new Info { Title = "RDB API", Version = "0.0" });
+                c.SwaggerDoc("api", new Info
+                {
+                    Title = "RDB API",
+                    Version = "0.0",
+                    Description = "REST API to manage and query RDB"
+                });
+
+                var assembly = GetType().Assembly;
+                var binPath = Path.GetDirectoryName(assembly.Location);
+                var xmlPath = Path.Combine(binPath, $"{assembly.GetName().Name}.xml");
+                c.IncludeXmlComments(xmlPath);
             });
 
             // mongodb
