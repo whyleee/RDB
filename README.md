@@ -96,6 +96,12 @@ Setup tasks require investigation, communication and solution decisions. Here is
   - Add tests
   - Add docs
   - Add client
+- Docs:
+  - Add XML documents for all API controller actions and models
+  - Use only `<summary>`, `<param>` and `<remarks>` XML documentation elements
+  - Mark all API controllers with `[Produces("application/json")]` and `[Consumes("application/json")]` attributes
+  - Specify all action responses with `[ProducesResponseType(type, statusCode)]` attributes
+  - Verify docs in Swagger UI
 - Admin:
   - Mobile first
   - Based on current RDB look

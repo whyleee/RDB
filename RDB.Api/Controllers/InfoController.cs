@@ -7,9 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RDB.Api.Controllers
 {
-    /// <summary>
-    /// Returns info about API host OS.
-    /// </summary>
     [Route("api/[controller]")]
     [Produces("text/plain")]
     public class InfoController : Controller

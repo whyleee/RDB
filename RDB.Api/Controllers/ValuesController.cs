@@ -10,9 +10,6 @@ using RDB.Api.Models;
 
 namespace RDB.Api.Controllers
 {
-    /// <summary>
-    /// Manages and queries values.
-    /// </summary>
     [Route("api/[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]
