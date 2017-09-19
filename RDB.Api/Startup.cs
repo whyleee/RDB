@@ -31,6 +31,7 @@ namespace RDB.Api
             services.AddCors();
             services.AddMvc();
 
+            // swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("api", new Info
@@ -44,6 +45,8 @@ namespace RDB.Api
                 var binPath = Path.GetDirectoryName(assembly.Location);
                 var xmlPath = Path.Combine(binPath, $"{assembly.GetName().Name}.xml");
                 c.IncludeXmlComments(xmlPath);
+
+                c.DocumentFilter<LowercasePathsDocumentFilter>();
             });
 
             // mongodb
