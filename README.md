@@ -21,7 +21,7 @@ Software requirements:
 Use `run` command from the solution root directory to build and start the app.  
 Use `run --production` to run in production mode.
 
-Browse http://localhost:8080/api/values for API or http://localhost:8080 for admin after all containers are started.
+Browse http://localhost:8080/api/ for API or http://localhost:8080 for admin after all containers are started.
 
 ### Development Setup
 Install additional tools for development:
