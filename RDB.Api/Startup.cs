@@ -76,15 +76,15 @@ namespace RDB.Api
             });
 
             var currentDir = Directory.GetCurrentDirectory();
-            var cssDir = Path.Combine(currentDir, "wwwroot/css");
+            var staticDir = Path.Combine(currentDir, "wwwroot");
             var nodeModulesDir = Path.Combine(currentDir, "node_modules");
             var swaggerUiDir = Path.Combine(nodeModulesDir, "swagger-ui-dist");
             var swaggerUiThemesDir = Path.Combine(nodeModulesDir, "swagger-ui-themes/themes/3.x");
 
             app.UseFileServer(new FileServerOptions
             {
-                RequestPath = "/api/css",
-                FileProvider = new PhysicalFileProvider(cssDir)
+                RequestPath = "/api/static",
+                FileProvider = new PhysicalFileProvider(staticDir)
             });
             app.UseFileServer(new FileServerOptions
             {
@@ -96,12 +96,14 @@ namespace RDB.Api
                 RequestPath = "/api",
                 FileProvider = new SwaggerUiFileProvider(swaggerUiDir, new SwaggerUiOptions
                 {
+                    Title = "RDB API",
                     Url = "/api/swagger.json",
                     CustomCssUrls = new[]
                     {
                         "/api/swagger-ui-themes/theme-material.css",
-                        "/api/css/swagger-ui-custom.css"
-                    }
+                        "/api/static/swagger-ui-custom.css"
+                    },
+                    FaviconUrl = "/api/static/favicon.ico"
                 })
             });
 

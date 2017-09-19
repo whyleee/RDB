@@ -55,6 +55,10 @@ namespace RDB.Api.Business.Swagger
         {
             var fileText = File.ReadAllText(_filePath);
 
+            if (!string.IsNullOrEmpty(_swaggerUiOptions.Title))
+            {
+                fileText = Regex.Replace(fileText, @"<title>[^<]*</title>", $"<title>{_swaggerUiOptions.Title}</title>");
+            }
             if (!string.IsNullOrEmpty(_swaggerUiOptions.Url))
             {
                 fileText = Regex.Replace(fileText, @"url:.*", $"url: window.location.origin + '{_swaggerUiOptions.Url}',");
@@ -62,6 +66,10 @@ namespace RDB.Api.Business.Swagger
             foreach (var cssUrl in _swaggerUiOptions.CustomCssUrls)
             {
                 fileText = Regex.Replace(fileText, @"</body>", $"<link rel=\"stylesheet\" href=\"{cssUrl}\">\n</body>");
+            }
+            if (!string.IsNullOrEmpty(_swaggerUiOptions.FaviconUrl))
+            {
+                fileText = Regex.Replace(fileText, @"\./favicon[^.]*.png", _swaggerUiOptions.FaviconUrl);
             }
 
             return Encoding.UTF8.GetBytes(fileText);
