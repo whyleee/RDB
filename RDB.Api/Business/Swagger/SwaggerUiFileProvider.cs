@@ -7,7 +7,9 @@ using Microsoft.Extensions.Primitives;
 
 namespace RDB.Api.Business.Swagger
 {
-    internal class SwaggerUiFileProvider : IFileProvider
+    // Supports swagger-ui-dist index.html file customizations using SwaggerUiOptions
+    // This is required to avoid changing original index.html in node_modules, so we can easily update it with npm
+    public class SwaggerUiFileProvider : IFileProvider
     {
         private readonly PhysicalFileProvider _fileProvider;
         private readonly SwaggerUiOptions _swaggerUiOptions;

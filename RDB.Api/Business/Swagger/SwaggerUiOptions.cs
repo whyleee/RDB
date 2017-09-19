@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace RDB.Api.Business.Swagger
 {
+    // Custom options to customize swagger-ui-dist index.html file
     public class SwaggerUiOptions
     {
         public string Title { get; set; }

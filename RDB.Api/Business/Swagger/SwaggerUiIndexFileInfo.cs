@@ -7,7 +7,8 @@ using Microsoft.Extensions.FileProviders;
 
 namespace RDB.Api.Business.Swagger
 {
-    internal class SwaggerUiIndexFileInfo : IFileInfo
+    // Replaces swagger-ui-dist index.html contents with customizations from provided SwaggerUiOptions
+    public class SwaggerUiIndexFileInfo : IFileInfo
     {
         private readonly string _filePath;
         private readonly SwaggerUiOptions _swaggerUiOptions;
