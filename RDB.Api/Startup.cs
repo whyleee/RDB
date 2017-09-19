@@ -12,6 +12,7 @@ using MongoDB.Driver;
 using RDB.Api.Business;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace RDB.Api
 {
@@ -34,9 +35,9 @@ namespace RDB.Api
             {
                 c.SwaggerDoc("api", new Info
                 {
-                    Title = "RDB API",
+                    Title = "API Explorer",
                     Version = "0.0",
-                    Description = "REST API to manage and query RDB"
+                    Description = "REST API to manage and query RDB."
                 });
 
                 var assembly = GetType().Assembly;
@@ -70,13 +71,30 @@ namespace RDB.Api
                 c.RouteTemplate = "{documentName}/swagger.json";
             });
 
-            var swaggerUiDir = Path.Combine(Directory.GetCurrentDirectory(), "node_modules/swagger-ui-dist");
+            var currentDir = Directory.GetCurrentDirectory();
+            var cssDir = Path.Combine(currentDir, "wwwroot/css");
+            var nodeModulesDir = Path.Combine(currentDir, "node_modules");
+            var swaggerUiDir = Path.Combine(nodeModulesDir, "swagger-ui-dist");
+            var swaggerUiThemesDir = Path.Combine(nodeModulesDir, "swagger-ui-themes/themes/3.x");
+
+            app.UseFileServer(new FileServerOptions
+            {
+                RequestPath = "/api/css",
+                FileProvider = new PhysicalFileProvider(cssDir)
+            });
+            app.UseFileServer(new FileServerOptions
+            {
+                RequestPath = "/api/swagger-ui-themes",
+                FileProvider = new PhysicalFileProvider(swaggerUiThemesDir)
+            });
             app.UseFileServer(new FileServerOptions
             {
                 RequestPath = "/api",
                 FileProvider = new SwaggerUiFileProvider(swaggerUiDir, new SwaggerUiOptions
                 {
-                    Url = "/api/swagger.json"
+                    Url = "/api/swagger.json",
+                    ThemeUrl = "/api/swagger-ui-themes/theme-material.css",
+                    CustomCssUrl = "/api/css/swagger-ui-custom.css"
                 })
             });
 

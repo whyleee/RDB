@@ -2,6 +2,7 @@
   "name": "rdb-api",
   "version": "0.0.0",
   "dependencies": {
-    "swagger-ui-dist": "^3.2.1"
+    "swagger-ui-dist": "^3.2.1",
+    "swagger-ui-themes": "^3.0.0"
   }
 }

@@ -57,7 +57,15 @@ namespace RDB.Api.Business
 
             if (!string.IsNullOrEmpty(_swaggerUiOptions.Url))
             {
-                fileText = Regex.Replace(fileText, @"url:.*", $"url: '{_swaggerUiOptions.Url}',");
+                fileText = Regex.Replace(fileText, @"url:.*", $"url: window.location.origin + '{_swaggerUiOptions.Url}',");
+            }
+            if (!string.IsNullOrEmpty(_swaggerUiOptions.ThemeUrl))
+            {
+                fileText = Regex.Replace(fileText, @"</body>", $"<link rel=\"stylesheet\" href=\"{_swaggerUiOptions.ThemeUrl}\">\n</body>");
+            }
+            if (!string.IsNullOrEmpty(_swaggerUiOptions.CustomCssUrl))
+            {
+                fileText = Regex.Replace(fileText, @"</body>", $"<link rel=\"stylesheet\" href=\"{_swaggerUiOptions.CustomCssUrl}\">\n</body>");
             }
 
             return Encoding.UTF8.GetBytes(fileText);

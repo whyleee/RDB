@@ -8,5 +8,7 @@ namespace RDB.Api.Business
     public class SwaggerUiOptions
     {
         public string Url { get; set; }
+        public string ThemeUrl { get; set; }
+        public string CustomCssUrl { get; set; }
     }
 }
