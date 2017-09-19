@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.FileProviders;
 
-namespace RDB.Api.Business
+namespace RDB.Api.Business.Swagger
 {
     internal class SwaggerUiIndexFileInfo : IFileInfo
     {
@@ -59,13 +59,9 @@ namespace RDB.Api.Business
             {
                 fileText = Regex.Replace(fileText, @"url:.*", $"url: window.location.origin + '{_swaggerUiOptions.Url}',");
             }
-            if (!string.IsNullOrEmpty(_swaggerUiOptions.ThemeUrl))
+            foreach (var cssUrl in _swaggerUiOptions.CustomCssUrls)
             {
-                fileText = Regex.Replace(fileText, @"</body>", $"<link rel=\"stylesheet\" href=\"{_swaggerUiOptions.ThemeUrl}\">\n</body>");
-            }
-            if (!string.IsNullOrEmpty(_swaggerUiOptions.CustomCssUrl))
-            {
-                fileText = Regex.Replace(fileText, @"</body>", $"<link rel=\"stylesheet\" href=\"{_swaggerUiOptions.CustomCssUrl}\">\n</body>");
+                fileText = Regex.Replace(fileText, @"</body>", $"<link rel=\"stylesheet\" href=\"{cssUrl}\">\n</body>");
             }
 
             return Encoding.UTF8.GetBytes(fileText);

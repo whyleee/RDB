@@ -13,6 +13,7 @@ using RDB.Api.Business;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using RDB.Api.Business.Swagger;
 
 namespace RDB.Api
 {
@@ -96,8 +97,11 @@ namespace RDB.Api
                 FileProvider = new SwaggerUiFileProvider(swaggerUiDir, new SwaggerUiOptions
                 {
                     Url = "/api/swagger.json",
-                    ThemeUrl = "/api/swagger-ui-themes/theme-material.css",
-                    CustomCssUrl = "/api/css/swagger-ui-custom.css"
+                    CustomCssUrls = new[]
+                    {
+                        "/api/swagger-ui-themes/theme-material.css",
+                        "/api/css/swagger-ui-custom.css"
+                    }
                 })
             });
 

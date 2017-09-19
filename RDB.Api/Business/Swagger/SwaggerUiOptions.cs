@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace RDB.Api.Business
+namespace RDB.Api.Business.Swagger
 {
     public class SwaggerUiOptions
     {
         public string Url { get; set; }
-        public string ThemeUrl { get; set; }
-        public string CustomCssUrl { get; set; }
+        public IEnumerable<string> CustomCssUrls { get; set; }
     }
 }

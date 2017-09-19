@@ -1,5 +1,7 @@
 FROM microsoft/aspnetcore-build:2.0.0 AS builder
 WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
 COPY *.csproj .
 RUN dotnet restore
 COPY . .

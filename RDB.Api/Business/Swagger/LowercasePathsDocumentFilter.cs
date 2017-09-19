@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace RDB.Api.Business
+namespace RDB.Api.Business.Swagger
 {
+    // Replaces all API URLs to lowercase, eg /api/Values -> /api/values
     // taken from https://github.com/domaindrivendev/Swashbuckle/issues/834#issuecomment-247112808
     public class LowercasePathsDocumentFilter : IDocumentFilter
     {
