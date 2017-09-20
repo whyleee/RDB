@@ -10,6 +10,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using RDB.Api.Business;
+using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
+using RDB.Api.Business.Swagger;
 
 namespace RDB.Api
 {
@@ -27,6 +31,24 @@ namespace RDB.Api
         {
             services.AddCors();
             services.AddMvc();
+
+            // swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("api", new Info
+                {
+                    Title = "API Explorer",
+                    Version = "0.0",
+                    Description = "REST API to manage and query RDB."
+                });
+
+                var assembly = GetType().Assembly;
+                var binPath = Path.GetDirectoryName(assembly.Location);
+                var xmlPath = Path.Combine(binPath, $"{assembly.GetName().Name}.xml");
+                c.IncludeXmlComments(xmlPath);
+
+                c.DocumentFilter<LowercasePathsDocumentFilter>();
+            });
 
             // mongodb
             var connectionString = _config.GetConnectionString("MongoDB");
@@ -47,7 +69,44 @@ namespace RDB.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "{documentName}/swagger.json";
+            });
+
+            var currentDir = Directory.GetCurrentDirectory();
+            var staticDir = Path.Combine(currentDir, "wwwroot");
+            var nodeModulesDir = Path.Combine(currentDir, "node_modules");
+            var swaggerUiDir = Path.Combine(nodeModulesDir, "swagger-ui-dist");
+            var swaggerUiThemesDir = Path.Combine(nodeModulesDir, "swagger-ui-themes/themes/3.x");
+
+            app.UseFileServer(new FileServerOptions
+            {
+                RequestPath = "/api/static",
+                FileProvider = new PhysicalFileProvider(staticDir)
+            });
+            app.UseFileServer(new FileServerOptions
+            {
+                RequestPath = "/api/swagger-ui-themes",
+                FileProvider = new PhysicalFileProvider(swaggerUiThemesDir)
+            });
+            app.UseFileServer(new FileServerOptions
+            {
+                RequestPath = "/api",
+                FileProvider = new SwaggerUiFileProvider(swaggerUiDir, new SwaggerUiOptions
+                {
+                    Title = "RDB API",
+                    Url = "/api/swagger.json",
+                    CustomCssUrls = new[]
+                    {
+                        "/api/swagger-ui-themes/theme-material.css",
+                        "/api/static/swagger-ui-custom.css"
+                    },
+                    FaviconUrl = "/api/static/favicon.ico"
+                })
+            });
+
             app.UseMvc();
         }
     }

@@ -1,0 +1,41 @@
+/* material theme overrides */
+.swagger-ui .opblock-get .opblock-section-header {
+  background: #3f51b5;
+}
+.swagger-ui .opblock-post .opblock-section-header {
+  background: #009688;
+}
+.swagger-ui .opblock-put .opblock-section-header {
+  background: #ff9800;
+}
+.swagger-ui .opblock-delete .opblock-section-header {
+  background: #f44336;
+}
+/*border-radius: 2px 2px 0 0;*/
+.swagger-ui .opblock-body {
+  border-top: 1px solid #e0e0e0;
+}
+.swagger-ui .opblock .opblock-section-header h4,
+.swagger-ui .opblock .opblock-section-header label {
+  color: #fff;
+}
+.swagger-ui .opblock .opblock-section-header .btn {
+  background: #f7f7f7;
+}
+.swagger-ui textarea {
+  border: 1px solid #d9d9d9;
+}
+
+/* rdb overrides */
+.swagger-ui .topbar {
+  background-color: #4caf50;
+}
+.swagger-ui .topbar a img,
+.swagger-ui .topbar a span,
+.swagger-ui .topbar .download-url-wrapper,
+.swagger-ui .scheme-container {
+  display: none;
+}
+.swagger-ui .topbar a:after {
+  content: 'RDB API';
+}

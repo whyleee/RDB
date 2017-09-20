@@ -21,7 +21,7 @@ Software requirements:
 Use `run` command from the solution root directory to build and start the app.  
 Use `run --production` to run in production mode.
 
-Browse http://localhost:8080/api/values for API or http://localhost:8080 for admin after all containers are started.
+Browse http://localhost:8080/api/ for API or http://localhost:8080 for admin after all containers are started.
 
 ### Development Setup
 Install additional tools for development:
@@ -96,6 +96,12 @@ Setup tasks require investigation, communication and solution decisions. Here is
   - Add tests
   - Add docs
   - Add client
+- Docs:
+  - Add XML documents for all API controller actions and models
+  - Use only `<summary>`, `<param>` and `<remarks>` XML documentation elements
+  - Mark all API controllers with `[Produces("application/json")]` and `[Consumes("application/json")]` attributes
+  - Specify all action responses with `[ProducesResponseType(type, statusCode)]` attributes
+  - Verify docs in Swagger UI
 - Admin:
   - Mobile first
   - Based on current RDB look
