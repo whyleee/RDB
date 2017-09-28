@@ -25,6 +25,8 @@ namespace RDB.Api
         {
             _config = config;
         }
+
+        public static string MongoDbConnectionString { get; set; }
         
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -35,9 +37,9 @@ namespace RDB.Api
             // swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("api", new Info
+                c.SwaggerDoc("v0", new Info
                 {
-                    Title = "API Explorer",
+                    Title = "RDB API",
                     Version = "0.0",
                     Description = "REST API to manage and query RDB."
                 });
@@ -51,7 +53,7 @@ namespace RDB.Api
             });
 
             // mongodb
-            var connectionString = _config.GetConnectionString("MongoDB");
+            var connectionString = MongoDbConnectionString ?? _config.GetConnectionString("MongoDB");
             var mongoUrl = new MongoUrl(connectionString);
             services.AddSingleton<IMongoClient>(s => new MongoClient(mongoUrl));
             services.AddSingleton<IMongoDatabase>(s => s.GetService<IMongoClient>().GetDatabase(mongoUrl.DatabaseName));
@@ -70,6 +72,14 @@ namespace RDB.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UsePathBase("/api");
+            app.UseMvc();
+
+            if (env.IsEnvironment("Test"))
+            {
+                return;
+            }
+
             app.UseSwagger(c =>
             {
                 c.RouteTemplate = "{documentName}/swagger.json";
@@ -83,21 +93,21 @@ namespace RDB.Api
 
             app.UseFileServer(new FileServerOptions
             {
-                RequestPath = "/api/static",
+                RequestPath = "/static",
                 FileProvider = new PhysicalFileProvider(staticDir)
             });
             app.UseFileServer(new FileServerOptions
             {
-                RequestPath = "/api/swagger-ui-themes",
+                RequestPath = "/swagger-ui-themes",
                 FileProvider = new PhysicalFileProvider(swaggerUiThemesDir)
             });
             app.UseFileServer(new FileServerOptions
             {
-                RequestPath = "/api",
+                RequestPath = "",
                 FileProvider = new SwaggerUiFileProvider(swaggerUiDir, new SwaggerUiOptions
                 {
                     Title = "RDB API",
-                    Url = "/api/swagger.json",
+                    Url = "/api/v0/swagger.json",
                     CustomCssUrls = new[]
                     {
                         "/api/swagger-ui-themes/theme-material.css",
@@ -106,8 +116,6 @@ namespace RDB.Api
                     FaviconUrl = "/api/static/favicon.ico"
                 })
             });
-
-            app.UseMvc();
         }
     }
 }

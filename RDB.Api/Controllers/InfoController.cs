@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RDB.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [Produces("text/plain")]
     public class InfoController : Controller
     {
