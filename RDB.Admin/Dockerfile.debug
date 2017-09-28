@@ -4,7 +4,8 @@ RUN apt-get update \
   && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm config set @creuna:registry https://www.myget.org/F/creuna/npm/ \
+  && npm install
 COPY *.csproj .
 RUN dotnet restore
 COPY . .

@@ -39,7 +39,7 @@ namespace RDB.Api
             {
                 c.SwaggerDoc("v0", new Info
                 {
-                    Title = "RDB API",
+                    Title = "Rdb Api",
                     Version = "0.0",
                     Description = "REST API to manage and query RDB."
                 });

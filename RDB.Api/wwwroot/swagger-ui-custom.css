@@ -39,3 +39,6 @@
 .swagger-ui .topbar a:after {
   content: 'RDB API';
 }
+.swagger-ui .info .title {
+  text-transform: uppercase;
+}

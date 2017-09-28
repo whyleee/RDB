@@ -2,8 +2,9 @@
   "name": "rdb-admin",
   "version": "0.0.0",
   "dependencies": {
-    "axios": "^0.16.2",
+    "@creuna/rdb-api": "0.0.0",
     "babel-polyfill": "^6.23.0",
+    "ms-rest-js": "^0.1.0",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
     "vuetify": "^0.14.8",

@@ -1,0 +1,32 @@
+{
+  "name": "@creuna/rdb-api",
+  "author": "Creuna",
+  "description": "RdbApi Library with typescript type definitions and works in node.js and browser javascript.",
+  "version": "0.0.0",
+  "dependencies": {
+    "ms-rest-js": "azure/ms-rest-js#master"
+  },
+  "keywords": [ "node", "azure", "typescript", "browser", "isomorphic"],
+  "license": "MIT",
+  "main": "dist/rdbApi.js",
+  "types": "typings/rdbApi.d.ts",
+  "devDependencies": {
+    "ts-loader": "^2.3.7",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.2",
+    "webpack": "^3.6.0",
+    "uglify-es": "^3.1.0"
+  },
+  "homepage": "https://github.com/creunaDK/RDB",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creunaDK/RDB.git"
+  },
+  "bugs": {
+    "url": "https://github.com/creunaDK/RDB/issues"
+  },
+  "scripts": {
+    "tsc": "tsc -p tsconfig.json",
+    "build": "npm -s run-script tsc && webpack && node node_modules/uglify-es/bin/uglifyjs --source-map -c -m -o dist/bundle.min.js dist/bundle.js"
+  }
+}

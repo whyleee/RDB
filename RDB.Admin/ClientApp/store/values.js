@@ -24,19 +24,19 @@ export default {
   },
   actions: {
     async loadValues({ commit }) {
-      const response = await api.values.get()
-      commit('setValues', response.data)
+      const values = await api.valuesGet()
+      commit('setValues', values)
     },
     async addValue({ commit }, text) {
-      const response = await api.values.post(text)
-      commit('addValue', response.data)
+      const value = await api.valuesPost({ text })
+      commit('addValue', value)
     },
     async updateText({ commit }, { value, text }) {
-      await api.values.put(value.id, text)
+      await api.valuesByIdPut(value.id, { text })
       commit('updateText', { value, text })
     },
     async deleteValue({ commit }, id) {
-      await api.values.delete(id)
+      await api.valuesByIdDelete(id)
       commit('deleteValue', id)
     }
   }

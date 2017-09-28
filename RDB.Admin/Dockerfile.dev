@@ -1,7 +1,8 @@
 FROM microsoft/aspnetcore-build:2.0.0 AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm config set @creuna:registry https://www.myget.org/F/creuna/npm/ \
+  && npm install
 COPY *.csproj .
 RUN dotnet restore
 COPY . .
